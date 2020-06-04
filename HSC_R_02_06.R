@@ -122,8 +122,6 @@ for(g in seq_along(net$genes))
                    onColor = "#6fc381", offColor = "steelblue4")
   }
 
-
-##########################EXTRA REVIEWER 2: dependency of TP53 from external signals and FOXO3A###########################
 ########################## RAS HYPERACTIVATION DOWNREGULTES P53 IN ABSENCE OF EXTERNAL CYCLING #############################
 RAS_KI <- fixGenes(HSC, "RAS", 1)
 RAS_KI_CYCLING_KO <- fixGenes(RAS_KI, "External_cycling" , 0 )
@@ -149,4 +147,22 @@ attrEXT_CYCLINg_FOXO3 <- getAttractors(FOXO3AKI, method="sat.exhaustive")
 plotAttractors(attrEXT_CYCLING, grouping = groupingHSC, reverse = T, onColor = "#6fc381", offColor = "steelblue4", drawLegend = FALSE, title = "External cycling absence")
 #acctractor for absence of external cycling signals and consitutive FOXO3A/ATM (results are similar dependening on TP53 activation)
 plotAttractors(attrEXT_CYCLINg_FOXO3, grouping = groupingHSC, reverse = T, onColor = "#6fc381", offColor = "steelblue4", drawLegend = FALSE, title = "External cycling absence and constitutive FOXO3A")
+
+############################# LOSS OF INTERACTION SIMULATION #####################
+#we simulated loss of interaction mutants for analysis of the balancing effect of TP53 regulation via ATM and MEF
+#Loss ATM : deleted interaction between ATM and MDM2
+lossATM <- loadNetwork("./HSC_MODIFIED_ATM") 
+lossATMAttr <- getAttractors(lossATM, method ="sat.exhaustive")
+plotAttractors(lossATMAttr, grouping = groupingHSC, reverse = T, onColor = "#6fc381", offColor = "steelblue4", drawLegend = FALSE, title = "Loss of Interaction ATM -> MDM2")
+#Loss MEF : deleted interaction between MEF and MDM2
+lossMEF <- loadNetwork(("./HSC_MODIFIED_MEF"))
+lossMEFAttr <- getAttractors(lossATM, method ="sat.exhaustive")
+plotAttractors(lossMEFAttr, grouping = groupingHSC, reverse = T, onColor = "#6fc381", offColor = "steelblue4", drawLegend = FALSE, title = "Loss of Interaction MEF -> MDM2")
+#Loss Combo : both upper interactions removed at the same network
+lossCombo <- loadNetwork(("./HSC_MODIFIED_Combo"))
+lossComboAttr <- getAttractors(lossCombo, method ="sat.exhaustive")
+plotAttractors(lossMEFAttr, grouping = groupingHSC, reverse = T, onColor = "#6fc381", offColor = "steelblue4", drawLegend = FALSE, title = "Loss of Interaction MEF -> MDM2 + ATM -> MDM2")
+
+
+
 
